@@ -1,0 +1,13 @@
+.formik-container {
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 500px;
+  }
+
+  .heading {
+    text-align: center;
+  }
+}

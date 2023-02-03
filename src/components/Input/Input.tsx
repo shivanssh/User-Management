@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import TextError from '../TextError/TextError';
+import './Input.scss';
 
 type Props = {
   name: string;
@@ -11,8 +12,11 @@ type Props = {
 const Input = ({ name, label, ...rest }: Props) => {
   return (
     <div className='form-control'>
-      <label htmlFor={name}>{label}</label>
-      <Field name={name} id={name} {...rest} />
+      <label htmlFor={name} className='input-label'>
+        {label}
+      </label>
+      <Field name={name} id={name} {...rest} className='input-field' />
+
       <ErrorMessage name={name} component={TextError} />
     </div>
   );

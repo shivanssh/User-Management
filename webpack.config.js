@@ -21,8 +21,8 @@ module.exports = {
         use: 'ts-loader',
       },
       {
-        test: /\.css$/,
-        use: [miniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.(sa|sc|c)ss$/,
+        use: [miniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
     ],
   },

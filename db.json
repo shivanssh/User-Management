@@ -1,21 +1,15 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Robert",
-      "email": "r@example.com",
-      "address": "mumbai"
+      "name": "Shivansh Singh",
+      "email": "shivansh.singh@lntinfotech.com",
+      "address": "Lokhandwala Complex",
+      "id": 1
     },
     {
       "name": "Shivansh Singh",
       "email": "shivansh.singh@lntinfotech.com",
       "address": "Lokhandwala",
-      "id": 2
-    },
-    {
-      "name": "Check",
-      "email": "reload@c.com",
-      "address": "test",
       "id": 3
     }
   ]

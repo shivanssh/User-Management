@@ -1,18 +1,17 @@
-export type User = {
-  id: string;
+export interface User {
+  id: number;
   name: string;
   email: string;
   address: string;
-};
+}
 
-export type Userstate = {
-  name: string;
-  email: string;
-  address: string;
-};
-
-export type State = {
+export interface State {
   isLoading: boolean;
   users: User[];
   error: string;
-};
+}
+
+export interface ListParams {
+  id?: string;
+  [key: string]: any;
+}

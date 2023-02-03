@@ -1,10 +1,15 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { put, takeEvery, call } from 'redux-saga/effects';
+import { User } from '../../types';
 import {
   setError,
   fetchUsersSucceeded,
   addUserSucceeded,
   deleteUserSucceeded,
   updateUser as editUser,
+  fetchUsersRequested,
+  addUserRequested,
+  deleteUserRequested,
 } from '../features/usersSlice';
 import {
   addUserApi,
@@ -22,9 +27,10 @@ function* fetchUsers(): any {
   }
 }
 
-export function* addUser({ payload }: any): any {
+export function* addUser(action: PayloadAction<User>): any {
+  const { payload: user } = action;
   try {
-    const response: any = yield call(addUserApi, payload);
+    const response: any = yield call(addUserApi, user);
     if (response.status === 201) {
       yield put(addUserSucceeded());
     }
@@ -33,36 +39,32 @@ export function* addUser({ payload }: any): any {
   }
 }
 
-export function* deleteUser({ payload: id }: any): any {
+export function* deleteUser(action: PayloadAction<number>): any {
+  const { payload: userId } = action;
   try {
-    console.log(id, '---------id');
-    const response = yield call(deleteUserApi, id);
+    const response = yield call(deleteUserApi, userId);
     if (response.status === 200) {
-      yield put(deleteUserSucceeded(id));
+      yield put(deleteUserSucceeded(userId));
     }
   } catch (error: any) {
     yield put(setError(error.message));
   }
 }
 
-export function* updateUser({ payload }: any): any {
+export function* updateUser(action: PayloadAction<User>): any {
+  const { payload: user } = action;
   try {
-    console.log(payload, '-------c1');
-    const response = yield call(updateUserApi, payload);
-    console.log(response, '---rescheck');
-    // if (response.status === 200) {
-    //   yield put(editUser(payload));
-    // }
+    yield call(updateUserApi, user);
   } catch (error: any) {
     yield put(setError(error.message));
   }
 }
 
 function* usersSaga() {
-  yield takeEvery('users/fetchUsersRequested', fetchUsers);
-  yield takeEvery('users/addUserRequested', addUser);
-  yield takeEvery('users/deleteUserRequested', deleteUser);
-  yield takeEvery('users/updateUser', updateUser);
+  yield takeEvery(fetchUsersRequested.type, fetchUsers);
+  yield takeEvery(addUserRequested.type, addUser);
+  yield takeEvery(deleteUserRequested.type, deleteUser);
+  yield takeEvery(editUser.type, updateUser);
 }
 
 export default usersSaga;

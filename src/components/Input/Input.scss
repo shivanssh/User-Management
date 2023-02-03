@@ -1,0 +1,29 @@
+$main-color: black;
+$sub-color: grey;
+
+.form-control {
+  position: relative;
+  margin: 15px 0;
+
+  .input-label {
+    text-transform: capitalize;
+  }
+  .input-field {
+    font-size: 16px;
+    line-height: 2em;
+    background: none;
+    background-color: white;
+    color: $sub-color;
+    font-size: 18px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $sub-color;
+    margin: 5px 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

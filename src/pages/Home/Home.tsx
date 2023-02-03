@@ -1,14 +1,19 @@
 import React from 'react';
+import './Home.scss';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import TableView from '../../components/TableView/TableView';
 import { fetchUsersRequested } from '../../redux/features/usersSlice';
+import CustomButton from './../../components/CustomButton/CustomButton';
+import Loader from './../../components/Loader/Loader';
+import TextError from './../../components/TextError/TextError';
+import { useAppSelector } from '../../hooks/dispatchSelection';
+import { useAppDispatch } from './../../hooks/dispatchSelection';
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const { users, isLoading, error } = useSelector((state: any) => state.users);
-  console.log(users, '---suers');
+  const dispatch = useAppDispatch();
+  const { users, isLoading, error } = useAppSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(fetchUsersRequested());
@@ -17,11 +22,12 @@ const Home = () => {
   return (
     <div className='home'>
       <Link to='addUser'>
-        <button>Add</button>
+        <CustomButton>Add User</CustomButton>
       </Link>
-      {isLoading && <div>Loading...</div>}
+
+      {isLoading && <Loader />}
       {users.length && !isLoading ? <TableView users={users} /> : null}
-      {!users.length && !isLoading && <h1>{error}</h1>}
+      {!users.length && !isLoading && <div className='error'>{error}</div>}
     </div>
   );
 };
