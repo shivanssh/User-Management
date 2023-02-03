@@ -26,7 +26,11 @@ const Home = () => {
       </Link>
 
       {isLoading && <Loader />}
-      {users.length && !isLoading ? <TableView users={users} /> : null}
+      {users.length && !isLoading ? (
+        <TableView users={users} />
+      ) : (
+        <h2 className='heading'>Start adding users</h2>
+      )}
       {!users.length && !isLoading && <div className='error'>{error}</div>}
     </div>
   );

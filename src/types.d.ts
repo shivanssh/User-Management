@@ -9,6 +9,7 @@ export interface State {
   isLoading: boolean;
   users: User[];
   error: string;
+  isUsersUpdated?: boolean;
 }
 
 export interface ListParams {

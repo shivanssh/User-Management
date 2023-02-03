@@ -17,7 +17,7 @@ const TableView = ({ users }: IProps) => {
   const dispatch = useDispatch();
   const handleDelete = (id: any) => {
     dispatch(deleteUserRequested(id));
-    toast.success('User deleted successfully!');
+    toast.success('User deleted successfully!', { toastId: 'delete' });
   };
 
   const ActionsButtons = (id: number) => {

@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import AddUpdateUser from './pages/AddUpdateUser/AddUpdateUser';
 import Home from './pages/Home/Home';
-import FourZeroFour from './pages/FourZeroFour/FourZeroFour';
+import FourZeroFour from './pages/FourOhFour/FourOhFour';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {

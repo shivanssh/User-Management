@@ -3,7 +3,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/db.json
+
 
 # testing
 /coverage
@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# files
+/db.json
+

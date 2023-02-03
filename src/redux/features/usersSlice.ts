@@ -5,6 +5,7 @@ const initialState: State = {
   isLoading: false,
   users: [],
   error: '',
+  isUsersUpdated: false,
 };
 
 const users = createSlice({
@@ -13,28 +14,41 @@ const users = createSlice({
   reducers: {
     fetchUsersRequested: (state) => {
       state.isLoading = true;
+      state.error = '';
     },
     fetchUsersSucceeded: (state, action: PayloadAction<User[]>) => {
       state.isLoading = false;
+      state.isUsersUpdated = false;
       state.users = action.payload;
+      state.error = '';
     },
     addUserRequested: (state) => {
       state.isLoading = true;
+      state.error = '';
     },
     addUserSucceeded: (state) => {
       state.isLoading = false;
+      state.error = '';
+      state.isUsersUpdated = true;
     },
     deleteUserRequested: (state) => {
       state.isLoading = true;
+      state.error = '';
     },
     deleteUserSucceeded: (state, action: PayloadAction<number>) => {
       state.isLoading = false;
       state.users = state.users.filter((user) => user.id !== action.payload);
+      state.error = '';
     },
-    updateUser: (state) => {
+    updateUserRequested: (state) => {
+      state.isLoading = true;
+      state.error = '';
+    },
+    updateUserSucceeded: (state, action) => {
       state.isLoading = false;
+      state.isUsersUpdated = true;
+      state.error = '';
     },
-
     setError: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
@@ -49,7 +63,8 @@ export const {
   addUserSucceeded,
   deleteUserRequested,
   deleteUserSucceeded,
-  updateUser,
+  updateUserRequested,
+  updateUserSucceeded,
   setError,
 } = users.actions;
 
