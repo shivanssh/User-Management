@@ -1,16 +1,3 @@
 {
-  "users": [
-    {
-      "name": "Shivansh Singh",
-      "email": "shivansh.singh@lntinfotech.com",
-      "address": "Lokhandwala Complex",
-      "id": 1
-    },
-    {
-      "name": "Shivansh Singh",
-      "email": "shivansh.singh@lntinfotech.com",
-      "address": "Lokhandwala",
-      "id": 3
-    }
-  ]
+  "users": []
 }
