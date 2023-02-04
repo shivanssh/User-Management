@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import CustomButton from './../CustomButton/CustomButton';
 import {
   addUserRequested,
+  clearError,
   updateUserRequested,
 } from '../../redux/features/usersSlice';
 import './FormikContainer.scss';
@@ -48,11 +49,13 @@ const FormikContainer = () => {
   }, [id]);
 
   useEffect(() => {
+    dispatch(clearError());
+
     if (isEdit) {
       const user = localStorage.getItem('user');
       user && setCurrentUser(JSON.parse(user));
     }
-  }, []);
+  }, [dispatch]);
 
   const onSubmit = (values: any) => {
     isEdit
