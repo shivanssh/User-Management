@@ -8,7 +8,7 @@ module.exports = {
   entry: './src/index.tsx', // entry point - file load in client
   output: {
     path: __dirname + '/dist/',
-    publicPath: '/',
+    publicPath: '/', // redirect to relative path instead of /main
   },
   module: {
     rules: [
@@ -28,7 +28,7 @@ module.exports = {
   },
   devtool: prod ? undefined : 'source-map',
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: true, // refersh to work
   },
   plugins: [
     new htmlWebpackPlugin({

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import Input from '../Input/Input';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import CustomButton from './../CustomButton/CustomButton';
 import {
@@ -14,13 +13,20 @@ import { useAppSelector } from '../../hooks/dispatchSelection';
 import { User } from '../../types';
 import { formValidationSchema } from './../../utils/usersSchemaValidation';
 import { useAppDispatch } from './../../hooks/dispatchSelection';
-import Loader from '../Loader/Loader';
+import {
+  errorToast,
+  isObjectEmpty,
+  updateUserToast,
+  addUserToast,
+} from './../../utils/helper';
 
 const FormikContainer = () => {
   const { id } = useParams();
+  const isEdit = Boolean(id);
   const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
-  const { users, error, isLoading, isUsersUpdated } = useAppSelector(
+  const { users, error, isUsersListUpdated } = useAppSelector(
     (state) => state.users
   );
 
@@ -30,12 +36,12 @@ const FormikContainer = () => {
     address: '',
   };
   const [currentUser, setCurrentUser] = useState(initialValues);
-  const isEdit = Boolean(id);
 
+  // To find & set user in localstate as well as in localStorage
   useEffect(() => {
     const user = users.find((user: User) => user.id === Number(id));
 
-    if (user && Object.keys(user).length) {
+    if (user && !isObjectEmpty(user)) {
       setCurrentUser(user);
       localStorage.setItem('user', JSON.stringify(user));
     }
@@ -49,69 +55,45 @@ const FormikContainer = () => {
   }, []);
 
   const onSubmit = (values: any) => {
-    if (isEdit) {
-      dispatch(updateUserRequested(values));
-    } else {
-      dispatch(addUserRequested(values));
-    }
+    isEdit
+      ? dispatch(updateUserRequested(values))
+      : dispatch(addUserRequested(values));
   };
 
+  // To get latest state for redux store and act accordingly
   useEffect(() => {
     if (isEdit) {
-      if (error) {
-        toast.error('Error while updating user!', { toastId: 'error' });
-      }
-      if (isUsersUpdated) {
-        console.log(isUsersUpdated, '--------isusersupdated');
-        navigate('/');
-        // setTimeout(() => navigate('/'), 500);
-        toast.success('User updated successfully!', { toastId: 'addUser' });
-      }
+      error && errorToast();
+      isUsersListUpdated && (navigate('/'), updateUserToast());
     } else {
-      if (error) {
-        toast.error('Error while adding user!', { toastId: 'error' });
-      }
-      if (isUsersUpdated) {
-        navigate('/');
-
-        // setTimeout(() => navigate('/'), 500);
-        toast.success('User added successfully!', { toastId: 'updateUser' });
-      }
+      error && errorToast();
+      isUsersListUpdated && (navigate('/'), addUserToast());
     }
-  }, [error, isUsersUpdated]);
+  }, [error, isUsersListUpdated]);
 
   return (
-    <>
-      {!isLoading ? (
-        <div className='formik-container'>
-          <h2 className='heading'> {isEdit ? 'Update User' : 'Add User'}</h2>
-          <Formik
-            initialValues={currentUser || initialValues}
-            validationSchema={formValidationSchema}
-            onSubmit={onSubmit}
-            enableReinitialize
-          >
-            {(formik) => (
-              <Form>
-                <div className='form-container'>
-                  <Input label='name' name='name' type='text' />
-                  <Input label='email' name='email' type='email' />
-                  <Input label='address' name='address' type='text' />
-                  <CustomButton
-                    type='submit'
-                    disabled={!formik.isValid || formik.isSubmitting}
-                  >
-                    {isEdit ? 'Update' : 'Add'}
-                  </CustomButton>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      ) : (
-        <Loader />
-      )}
-    </>
+    <div className='formik-container'>
+      <div className='heading'> {isEdit ? 'Update User' : 'Add User'}</div>
+      <Formik
+        initialValues={currentUser || initialValues}
+        validationSchema={formValidationSchema}
+        onSubmit={onSubmit}
+        enableReinitialize
+      >
+        {(formik) => (
+          <Form>
+            <div className='form-container'>
+              <Input label='name' name='name' type='text' />
+              <Input label='email' name='email' type='email' />
+              <Input label='address' name='address' type='text' />
+              <CustomButton type='submit' disabled={!formik.isValid}>
+                {isEdit ? 'Update' : 'Add'}
+              </CustomButton>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

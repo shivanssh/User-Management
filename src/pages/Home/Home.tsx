@@ -22,16 +22,20 @@ const Home = () => {
   return (
     <div className='home'>
       <Link to='addUser'>
-        <CustomButton>Add User</CustomButton>
+        <CustomButton disabled={error || isLoading}>Add User</CustomButton>
       </Link>
 
       {isLoading && <Loader />}
-      {users.length && !isLoading ? (
-        <TableView users={users} />
-      ) : (
-        <h2 className='heading'>Start adding users</h2>
+
+      {!isLoading && users.length ? <TableView users={users} /> : null}
+
+      {!users.length && !isLoading && error && (
+        <div className='error'>{error}</div>
       )}
-      {!users.length && !isLoading && <div className='error'>{error}</div>}
+
+      {!users.length && !isLoading && !error && (
+        <div className='heading'>Start adding users!</div>
+      )}
     </div>
   );
 };

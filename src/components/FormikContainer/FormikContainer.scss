@@ -1,13 +1,36 @@
 .formik-container {
+  min-width: 600px;
+  height: 500px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+
+  background-color: #fff;
   .form-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     position: relative;
     width: 500px;
+    margin-bottom: 20px;
   }
 
   .heading {
+    font-size: 25px;
+    font-weight: 600;
     text-align: center;
+    margin: 10px 0;
+    text-transform: capitalize;
+  }
+}
+
+@media (max-width: 600px) {
+  .formik-container {
+    min-width: 200px;
+    .form-container {
+      button {
+        margin: 10px 50px;
+      }
+    }
   }
 }

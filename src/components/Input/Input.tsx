@@ -15,8 +15,8 @@ const Input = ({ name, label, ...rest }: Props) => {
       <label htmlFor={name} className='input-label'>
         {label}
       </label>
-      <Field name={name} id={name} {...rest} className='input-field' />
 
+      <Field name={name} id={name} {...rest} className='input-field' />
       <ErrorMessage name={name} component={TextError} />
     </div>
   );

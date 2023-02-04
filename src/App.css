@@ -4,6 +4,9 @@
 
 body {
   padding: 20px 60px;
+  background: linear-gradient(to left,
+      #F5F7FA 50%,
+      #B8C6DB 100%);
 }
 
 a {

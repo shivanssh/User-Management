@@ -1,11 +1,11 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { deleteUserRequested } from '../../redux/features/usersSlice';
 import './TableView.scss';
 import CustomButton from './../CustomButton/CustomButton';
 import { User } from '../../types';
+import { deleteUserToast, errorToast } from './../../utils/helper';
+import { useAppSelector, useAppDispatch } from '../../hooks/dispatchSelection';
 
 const DATA_LABELS = ['Sr No.', 'Name', 'Email', 'Address', 'Actions'];
 
@@ -14,22 +14,28 @@ interface IProps {
 }
 
 const TableView = ({ users }: IProps) => {
-  const dispatch = useDispatch();
-  const handleDelete = (id: any) => {
-    dispatch(deleteUserRequested(id));
-    toast.success('User deleted successfully!', { toastId: 'delete' });
-  };
+  const dispatch = useAppDispatch();
+  const { error, isUserDeleted } = useAppSelector((state) => state.users);
 
   const ActionsButtons = (id: number) => {
     return (
       <div className='actionOptions'>
         <Link to={`/updateUser/${id}`}>
           <CustomButton>Edit</CustomButton>
-        </Link>{' '}
+        </Link>
         <CustomButton onClick={() => handleDelete(id)}>Delete</CustomButton>
       </div>
     );
   };
+
+  const handleDelete = (id: any) => {
+    dispatch(deleteUserRequested(id));
+  };
+
+  useEffect(() => {
+    error && errorToast();
+    isUserDeleted && deleteUserToast();
+  }, [error, isUserDeleted]);
 
   return (
     <div className='table-container'>
