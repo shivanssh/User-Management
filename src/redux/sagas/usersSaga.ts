@@ -58,7 +58,7 @@ export function* updateUser(action: PayloadAction<User>): SagaIterator {
   try {
     const resposnse = yield call(updateUserApi, user);
     if (resposnse.status === 200) {
-      yield put(updateUserSucceeded(user));
+      yield put(updateUserSucceeded());
     }
   } catch (error: any) {
     yield put(setError(error.message));

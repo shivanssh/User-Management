@@ -3,7 +3,7 @@ $sub-color: grey;
 
 .form-control {
   position: relative;
-  margin: 25px 0;
+  padding: 15px;
 
   .input-label {
     text-transform: capitalize;
@@ -16,7 +16,7 @@ $sub-color: grey;
     color: $sub-color;
     font-size: 18px;
     display: block;
-    width: 100%;
+    min-width: 100%;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid $sub-color;
@@ -31,12 +31,10 @@ $sub-color: grey;
 @media (max-width: 600px) {
   .form-control {
     min-width: 300px;
+    height: auto;
     margin: 10px;
-
-    .input-label,
     .input-field {
-      width: 80%;
-      margin-left: 30px;
+      min-width: 80%;
     }
   }
 }

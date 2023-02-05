@@ -1,15 +1,30 @@
+const path = require('path');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // generates html(index.html) from template
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // extract css from index.html
+
 const prod = process.env.NODE_ENV === 'production';
-
-const htmlWebpackPlugin = require('html-webpack-plugin'); // generates html(index.html) from template
-const miniCssExtractPlugin = require('mini-css-extract-plugin'); // extract css from index.html
-
 module.exports = {
-  mode: prod ? 'production' : 'development',
-  entry: './src/index.tsx', // entry point - file load in client
-  output: {
-    path: __dirname + '/dist/',
-    publicPath: '/', // redirect to relative path instead of /main
+  mode: 'development',
+  entry: {
+    bundle: path.resolve(__dirname, 'src/index.tsx'),
   },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js', // [contenthash] for having unquie naming convention for caching -- "clean"
+    publicPath: '/', // redirect to relative path instead of [name]
+  },
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    port: 3000,
+    hot: true, // hot reload
+    open: true, //open browser
+    compress: true, //zgip
+    historyApiFallback: true, // make refersh work
+  },
+  devtool: prod ? undefined : 'source-map',
   module: {
     rules: [
       {
@@ -22,18 +37,17 @@ module.exports = {
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        use: [miniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
+      {},
     ],
   },
-  devtool: prod ? undefined : 'source-map',
-  devServer: {
-    historyApiFallback: true, // refersh to work
-  },
   plugins: [
-    new htmlWebpackPlugin({
-      template: __dirname + '/public/index.html',
+    new HtmlWebpackPlugin({
+      title: 'CRUD Application',
+      filename: 'index.html',
+      template: 'public/index.html',
     }),
-    new miniCssExtractPlugin(),
+    new MiniCssExtractPlugin(),
   ],
 };

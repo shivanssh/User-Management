@@ -19,10 +19,10 @@ const users = createSlice({
     },
     fetchUsersSucceeded: (state, action: PayloadAction<User[]>) => {
       state.isLoading = false;
-      state.isUsersListUpdated = false;
-      state.isUserDeleted = false;
       state.users = action.payload;
       state.error = '';
+      state.isUsersListUpdated = false;
+      state.isUserDeleted = false;
     },
     addUserRequested: (state) => {
       state.isLoading = true;
@@ -40,17 +40,17 @@ const users = createSlice({
     deleteUserSucceeded: (state, action: PayloadAction<number>) => {
       state.isLoading = false;
       state.users = state.users.filter((user) => user.id !== action.payload);
-      state.isUserDeleted = true;
       state.error = '';
+      state.isUserDeleted = true;
     },
     updateUserRequested: (state) => {
       state.isLoading = true;
       state.error = '';
     },
-    updateUserSucceeded: (state, action) => {
+    updateUserSucceeded: (state) => {
       state.isLoading = false;
-      state.isUsersListUpdated = true;
       state.error = '';
+      state.isUsersListUpdated = true;
     },
     setError: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
@@ -58,6 +58,9 @@ const users = createSlice({
     },
     clearError: (state) => {
       state.error = '';
+      state.isLoading = false;
+      state.isUserDeleted = false;
+      state.isUsersListUpdated = false;
     },
   },
 });

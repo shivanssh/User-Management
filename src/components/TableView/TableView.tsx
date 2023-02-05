@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { deleteUserRequested } from '../../redux/features/usersSlice';
+import {
+  clearError,
+  deleteUserRequested,
+} from '../../redux/features/usersSlice';
 import './TableView.scss';
 import CustomButton from './../CustomButton/CustomButton';
 import { User } from '../../types';
@@ -17,7 +20,11 @@ const TableView = ({ users }: IProps) => {
   const dispatch = useAppDispatch();
   const { error, isUserDeleted } = useAppSelector((state) => state.users);
 
-  const ActionsButtons = (id: number) => {
+  const handleDelete = (id: any) => {
+    dispatch(deleteUserRequested(id));
+  };
+
+  const actionsButtons = (id: number) => {
     return (
       <div className='actionOptions'>
         <Link to={`/updateUser/${id}`}>
@@ -28,12 +35,8 @@ const TableView = ({ users }: IProps) => {
     );
   };
 
-  const handleDelete = (id: any) => {
-    dispatch(deleteUserRequested(id));
-  };
-
   useEffect(() => {
-    error && errorToast();
+    error && (errorToast(), dispatch(clearError()));
     isUserDeleted && deleteUserToast();
   }, [error, isUserDeleted]);
 
@@ -56,7 +59,7 @@ const TableView = ({ users }: IProps) => {
                 <td data-label='Name'>{name}</td>
                 <td data-label='Email'>{email}</td>
                 <td data-label='Address'>{address}</td>
-                <td data-label='Actions'>{ActionsButtons(id)}</td>
+                <td data-label='Actions'>{actionsButtons(id)}</td>
               </tr>
             );
           })}

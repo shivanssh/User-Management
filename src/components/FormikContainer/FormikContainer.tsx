@@ -49,13 +49,11 @@ const FormikContainer = () => {
   }, [id]);
 
   useEffect(() => {
-    dispatch(clearError());
-
     if (isEdit) {
       const user = localStorage.getItem('user');
       user && setCurrentUser(JSON.parse(user));
     }
-  }, [dispatch]);
+  }, []);
 
   const onSubmit = (values: any) => {
     isEdit
@@ -66,10 +64,10 @@ const FormikContainer = () => {
   // To get latest state for redux store and act accordingly
   useEffect(() => {
     if (isEdit) {
-      error && errorToast();
+      error && (errorToast(), dispatch(clearError()));
       isUsersListUpdated && (navigate('/'), updateUserToast());
     } else {
-      error && errorToast();
+      error && (errorToast(), dispatch(clearError()));
       isUsersListUpdated && (navigate('/'), addUserToast());
     }
   }, [error, isUsersListUpdated]);
@@ -89,9 +87,12 @@ const FormikContainer = () => {
               <Input label='name' name='name' type='text' />
               <Input label='email' name='email' type='email' />
               <Input label='address' name='address' type='text' />
-              <CustomButton type='submit' disabled={!formik.isValid}>
-                {isEdit ? 'Update' : 'Add'}
-              </CustomButton>
+              <div className='button-options'>
+                <CustomButton type='submit' disabled={!formik.isValid}>
+                  {isEdit ? 'Update' : 'Add'}
+                </CustomButton>
+                <CustomButton onClick={() => navigate('/')}>Back</CustomButton>
+              </div>
             </div>
           </Form>
         )}

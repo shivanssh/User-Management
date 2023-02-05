@@ -1,18 +1,23 @@
 .formik-container {
-  min-width: 600px;
-  height: 500px;
+  min-width: 400px;
+  height: auto;
   border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
-
+  padding: 10px;
   background-color: #fff;
+
   .form-container {
     position: relative;
-    width: 500px;
-    margin-bottom: 20px;
+    width: 350px;
+    .button-options {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px;
+    }
   }
 
   .heading {
@@ -26,10 +31,18 @@
 
 @media (max-width: 600px) {
   .formik-container {
-    min-width: 200px;
+    min-width: 300px;
+    height: auto;
     .form-container {
+      width: 280px;
+      .button-options {
+        display: flex;
+        justify-content: space-between;
+      }
       button {
-        margin: 10px 50px;
+        padding: 0;
+        margin: 10px;
+        min-width: 100px;
       }
     }
   }
