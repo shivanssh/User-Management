@@ -32,7 +32,7 @@ function* fetchUsers(): SagaIterator {
 export function* addUser(action: PayloadAction<User>): SagaIterator {
   const { payload: user } = action;
   try {
-    const response: any = yield call(addUserApi, user);
+    const response = yield call(addUserApi, user);
     if (response.status === 201) {
       yield put(addUserSucceeded());
     }

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
-import Input from '../Input/Input';
+import { Formik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import CustomButton from './../CustomButton/CustomButton';
 import {
   addUserRequested,
   clearError,
@@ -14,6 +12,7 @@ import { useAppSelector } from '../../hooks/dispatchSelection';
 import { User } from '../../types';
 import { formValidationSchema } from './../../utils/usersSchemaValidation';
 import { useAppDispatch } from './../../hooks/dispatchSelection';
+import AddUpdateUserForm from './../AddUpdateUserForm/AddUpdateUserForm';
 import {
   errorToast,
   isObjectEmpty,
@@ -49,11 +48,12 @@ const FormikContainer = () => {
   }, [id]);
 
   useEffect(() => {
+    dispatch(clearError());
     if (isEdit) {
       const user = localStorage.getItem('user');
       user && setCurrentUser(JSON.parse(user));
     }
-  }, []);
+  }, [dispatch]);
 
   const onSubmit = (values: any) => {
     isEdit
@@ -81,21 +81,7 @@ const FormikContainer = () => {
         onSubmit={onSubmit}
         enableReinitialize
       >
-        {(formik) => (
-          <Form>
-            <div className='form-container'>
-              <Input label='name' name='name' type='text' />
-              <Input label='email' name='email' type='email' />
-              <Input label='address' name='address' type='text' />
-              <div className='button-options'>
-                <CustomButton type='submit' disabled={!formik.isValid}>
-                  {isEdit ? 'Update' : 'Add'}
-                </CustomButton>
-                <CustomButton onClick={() => navigate('/')}>Back</CustomButton>
-              </div>
-            </div>
-          </Form>
-        )}
+        {(formik) => <AddUpdateUserForm formik={formik} isEdit={isEdit} />}
       </Formik>
     </div>
   );

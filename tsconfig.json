@@ -1,11 +1,11 @@
 {
   "compilerOptions":{
-    "esModuleInterop": true,
+    "esModuleInterop": true,  // cjs-es6js imports
     "jsx": "react",
-    "module": "esnext",
+    "module": "esnext", // webpack [esnext:asis]
     "moduleResolution": "node",
     "lib":[
-      "dom",
+      "dom", // browsers API
       "esnext"
     ],
     "strict": true,

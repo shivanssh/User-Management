@@ -21,9 +21,11 @@ const Home = () => {
 
   return (
     <div className='home'>
-      <Link to='addUser'>
-        <CustomButton disabled={error || isLoading}>Add User</CustomButton>
-      </Link>
+      <div className={`${users.length ? 'right' : ''} add-user-button`}>
+        <Link to='addUser'>
+          <CustomButton disabled={error || isLoading}>Add User</CustomButton>
+        </Link>
+      </div>
 
       {isLoading && <Loader />}
 

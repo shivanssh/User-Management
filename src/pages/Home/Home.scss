@@ -4,6 +4,11 @@
   justify-content: center;
   flex-direction: column;
 
+  .add-user-button {
+    &.right {
+      text-align: right;
+    }
+  }
   .error {
     color: red;
     font-weight: bold;

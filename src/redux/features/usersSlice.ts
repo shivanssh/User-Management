@@ -16,6 +16,8 @@ const users = createSlice({
     fetchUsersRequested: (state) => {
       state.isLoading = true;
       state.error = '';
+      state.isUsersListUpdated = false;
+      state.isUserDeleted = false;
     },
     fetchUsersSucceeded: (state, action: PayloadAction<User[]>) => {
       state.isLoading = false;
@@ -27,15 +29,18 @@ const users = createSlice({
     addUserRequested: (state) => {
       state.isLoading = true;
       state.error = '';
+      state.isUserDeleted = false;
     },
     addUserSucceeded: (state) => {
       state.isLoading = false;
       state.error = '';
       state.isUsersListUpdated = true;
+      state.isUserDeleted = false;
     },
     deleteUserRequested: (state) => {
       state.isLoading = true;
       state.error = '';
+      state.isUserDeleted = false;
     },
     deleteUserSucceeded: (state, action: PayloadAction<number>) => {
       state.isLoading = false;
@@ -46,11 +51,13 @@ const users = createSlice({
     updateUserRequested: (state) => {
       state.isLoading = true;
       state.error = '';
+      state.isUserDeleted = false;
     },
     updateUserSucceeded: (state) => {
       state.isLoading = false;
       state.error = '';
       state.isUsersListUpdated = true;
+      state.isUserDeleted = false;
     },
     setError: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
