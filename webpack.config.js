@@ -31,9 +31,9 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         resolve: {
-          extensions: ['.ts', '.tsx', '.json', '.js'],
+          extensions: ['.ts', '.tsx', '.js', '.json'],
         },
-        use: 'ts-loader',
+        use: ['babel-loader', 'ts-loader'],
       },
       {
         test: /\.(sa|sc|c)ss$/,

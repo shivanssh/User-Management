@@ -25,4 +25,4 @@ yarn-error.log*
 # files
 /db.json
 /dist
-
+/dummyData.json
