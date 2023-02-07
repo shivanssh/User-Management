@@ -37,7 +37,7 @@ const users = createSlice({
       state.isUsersListUpdated = true;
       state.isUserDeleted = false;
     },
-    deleteUserRequested: (state) => {
+    deleteUserRequested: (state, action) => {
       state.isLoading = true;
       state.error = '';
       state.isUserDeleted = false;

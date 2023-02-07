@@ -1,12 +1,14 @@
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 10px;
+.table-container {
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px;
 
-  th,
-  td {
-    padding: 10px 15px;
-    border: 2px solid #000;
+    th,
+    td {
+      padding: 10px 15px;
+      border: 2px solid #000;
+    }
   }
 }
 

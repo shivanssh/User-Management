@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   clearError,
@@ -9,6 +9,7 @@ import CustomButton from './../CustomButton/CustomButton';
 import { User } from '../../types';
 import { deleteUserToast, errorToast } from './../../utils/helper';
 import { useAppSelector, useAppDispatch } from '../../hooks/dispatchSelection';
+import Popup from '../Popup/Popup';
 
 const DATA_LABELS = ['Sr No.', 'Name', 'Email', 'Address', 'Actions'];
 
@@ -18,10 +19,25 @@ interface IProps {
 
 const TableView = ({ users }: IProps) => {
   const dispatch = useAppDispatch();
+  const [showPopup, setShowPopup] = useState(false);
+  const [deleteId, setDeleteId] = useState<string>('');
+  const [userEmail, setUserEmail] = useState('');
   const { error, isUserDeleted } = useAppSelector((state) => state.users);
 
+  useEffect(() => {}, [deleteId, showPopup]);
+
+  const deleteConfirmation = (isConfirmed: boolean) => {
+    if (isConfirmed) {
+      dispatch(deleteUserRequested(Number(deleteId)));
+    }
+    setShowPopup(false);
+  };
+
   const handleDelete = (id: any) => {
-    dispatch(deleteUserRequested(id));
+    setShowPopup(true);
+    setDeleteId(id);
+    const user = users.find((user) => user.id === Number(id));
+    user && setUserEmail(user?.email);
   };
 
   const actionsButtons = (id: number) => {
@@ -42,6 +58,12 @@ const TableView = ({ users }: IProps) => {
 
   return (
     <div className='table-container'>
+      <Popup
+        title={`Are you sure wanna delete ${userEmail} ?`}
+        deleteConfirmation={deleteConfirmation}
+        onClose={() => setShowPopup(false)}
+        showPopup={showPopup}
+      />
       <table className='table'>
         <thead>
           <tr>
