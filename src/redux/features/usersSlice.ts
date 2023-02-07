@@ -13,7 +13,7 @@ const users = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    fetchUsersRequested: (state) => {
+    fetchUsersRequested: (state, action) => {
       state.isLoading = true;
       state.error = '';
       state.isUsersListUpdated = false;

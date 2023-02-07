@@ -5,6 +5,11 @@ export interface User {
   address: string;
 }
 
+export interface Paginate {
+  page: number;
+  limit: number;
+}
+
 export interface State {
   isLoading: boolean;
   users: User[];

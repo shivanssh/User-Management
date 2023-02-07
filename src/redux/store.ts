@@ -5,7 +5,7 @@ import logger from 'redux-logger';
 import usersSaga from './sagas/usersSaga';
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware, logger];
+const middlewares = [sagaMiddleware];
 
 const store = configureStore({
   reducer: {

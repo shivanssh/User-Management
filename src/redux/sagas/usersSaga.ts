@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { put, takeEvery } from 'redux-saga/effects';
-import { User } from '../../types';
+import { Paginate, User } from '../../types';
 import {
   setError,
   fetchUsersSucceeded,
@@ -14,9 +14,10 @@ import {
 } from '../features/usersSlice';
 import * as userServices from './../services/userService';
 
-function* fetchUsers(): any {
+function* fetchUsers(action: PayloadAction<Paginate>): any {
+  const { payload: counter } = action;
   try {
-    const response = yield userServices.fetchUsers();
+    const response = yield userServices.fetchUsers(counter);
     yield put(fetchUsersSucceeded(response.data));
   } catch (error: any) {
     yield put(setError(error.message));
