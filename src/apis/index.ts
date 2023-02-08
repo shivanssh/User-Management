@@ -1,10 +1,16 @@
 import axios from 'axios';
-import { Paginate, User } from '../types';
+import { PageInfo, User } from '../types';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 
-export const fetchUsersApi = async ({ page, limit }: Paginate) =>
-  await axios.get(`users?_page=${page}&_limit=${limit}`);
+export const fetchUsersApi = async ({
+  pageCount,
+  pageLimit,
+  searchQuery,
+}: PageInfo) =>
+  await axios.get(
+    `users?q=${pageCount}&_page=${pageLimit}&_limit=${searchQuery}`
+  );
 
 export const addUserApi = async (user: User) =>
   await axios.post('/users', user);

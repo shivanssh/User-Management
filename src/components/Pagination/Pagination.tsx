@@ -1,12 +1,18 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import './Pagination.scss';
 
 interface IProps {
+  disabled: boolean;
   handleLimitChange: (e: any) => void;
-  handlePageChange: (e: any) => void;
+  nextButtonClicked: () => void;
+  previousButtonClicked: () => void;
 }
-const Pagination = ({ handleLimitChange, handlePageChange }: IProps) => {
-  const pageNumber = useRef(1);
+const Pagination = ({
+  disabled,
+  handleLimitChange,
+  nextButtonClicked,
+  previousButtonClicked,
+}: IProps) => {
   return (
     <div className='pagination'>
       <div className='page-limit'>
@@ -15,7 +21,6 @@ const Pagination = ({ handleLimitChange, handlePageChange }: IProps) => {
           className='page-limit-selection'
           name='pageLimit'
           id='pageLimit'
-          defaultValue={5}
           onChange={(e: any) => handleLimitChange(e)}
         >
           <option value='5'>5</option>
@@ -27,16 +32,12 @@ const Pagination = ({ handleLimitChange, handlePageChange }: IProps) => {
       <div className='next-previous-button'>
         <button
           className='previous-button'
-          onClick={() =>
-            handlePageChange(pageNumber.current <= 1 ? 1 : --pageNumber.current)
-          }
+          onClick={() => previousButtonClicked()}
+          disabled={disabled}
         >
           Previous
         </button>
-        <button
-          className='next-button'
-          onClick={() => handlePageChange(++pageNumber.current)}
-        >
+        <button className='next-button' onClick={() => nextButtonClicked()}>
           Next
         </button>
       </div>

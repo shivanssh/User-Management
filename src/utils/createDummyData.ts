@@ -16,6 +16,7 @@ const createDummyData = (count: number): User[] => {
       name: `Test ${i}`,
       email: `test${i}@test.com`,
       address: `test${i} add`,
+      age: Math.floor(Math.random() * 100) + 1,
     };
     users.push(userObj);
   }

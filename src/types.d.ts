@@ -1,13 +1,15 @@
 export interface User {
   id: number;
   name: string;
+  age: number;
   email: string;
   address: string;
 }
 
-export interface Paginate {
-  page: number;
-  limit: number;
+interface PageInfo {
+  pageCount: number;
+  pageLimit: string;
+  searchQuery: string;
 }
 
 export interface State {

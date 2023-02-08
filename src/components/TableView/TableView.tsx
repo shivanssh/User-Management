@@ -11,7 +11,7 @@ import { deleteUserToast, errorToast } from './../../utils/helper';
 import { useAppSelector, useAppDispatch } from '../../hooks/dispatchSelection';
 import Popup from '../Popup/Popup';
 
-const DATA_LABELS = ['Sr No.', 'Name', 'Email', 'Address', 'Actions'];
+const DATA_LABELS = ['Sr No.', 'Name', 'Email', 'Age', 'Address', 'Actions'];
 
 interface IProps {
   users: User[];
@@ -40,16 +40,14 @@ const TableView = ({ users }: IProps) => {
     user && setUserEmail(user?.email);
   };
 
-  const actionsButtons = (id: number) => {
-    return (
-      <div className='actionOptions'>
-        <Link to={`/updateUser/${id}`}>
-          <CustomButton>Edit</CustomButton>
-        </Link>
-        <CustomButton onClick={() => handleDelete(id)}>Delete</CustomButton>
-      </div>
-    );
-  };
+  const actionsButtons = (id: number) => (
+    <div className='actionOptions'>
+      <Link to={`/updateUser/${id}`}>
+        <CustomButton>Edit</CustomButton>
+      </Link>
+      <CustomButton onClick={() => handleDelete(id)}>Delete</CustomButton>
+    </div>
+  );
 
   useEffect(() => {
     error && (errorToast(), dispatch(clearError()));
@@ -74,12 +72,13 @@ const TableView = ({ users }: IProps) => {
         </thead>
         <tbody>
           {users.map((user: User, idx: number) => {
-            const { id, name, address, email } = user;
+            const { id, name, age, address, email } = user;
             return (
               <tr key={id}>
                 <td data-label='Sr No.'>{idx + 1}</td>
                 <td data-label='Name'>{name}</td>
                 <td data-label='Email'>{email}</td>
+                <td data-label='Age'>{age}</td>
                 <td data-label='Address'>{address}</td>
                 <td data-label='Actions'>{actionsButtons(id)}</td>
               </tr>

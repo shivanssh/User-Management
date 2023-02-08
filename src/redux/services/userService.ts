@@ -1,4 +1,4 @@
-import { Paginate, User } from '../../types';
+import { PageInfo, User } from '../../types';
 import {
   addUserApi,
   deleteUserApi,
@@ -6,8 +6,8 @@ import {
   updateUserApi,
 } from './../../apis/index';
 
-export const fetchUsers = async (counter: Paginate) => {
-  return await fetchUsersApi(counter);
+export const fetchUsers = async (payload: PageInfo) => {
+  return await fetchUsersApi(payload);
 };
 
 export const addUser = async (user: User) => {

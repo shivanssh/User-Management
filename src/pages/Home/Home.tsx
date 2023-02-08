@@ -7,31 +7,25 @@ import CustomButton from './../../components/CustomButton/CustomButton';
 import Loader from './../../components/Loader/Loader';
 import { useAppSelector } from '../../hooks/dispatchSelection';
 import { useAppDispatch } from './../../hooks/dispatchSelection';
-import { Paginate } from '../../types';
-import Pagination from '../../components/Pagination/Pagination';
+import SearchBarContainer from '../../components/SearchBar/SearchBarContainer';
+import PaginationContainer from '../../components/Pagination/PaginationContainer';
 
 const Home = () => {
-  const initialPageCounter: Paginate = {
-    page: 1,
-    limit: 5,
-  };
   const dispatch = useAppDispatch();
-  const [counter, setCounter] = useState(initialPageCounter);
   const { users, isLoading, error } = useAppSelector((state) => state.users);
+  const { pageCount, pageLimit, searchQuery } = useAppSelector(
+    (state) => state.pagination
+  );
 
   useEffect(() => {
-    dispatch(fetchUsersRequested(counter));
-  }, [dispatch, counter]);
-
-  const handlePageLimitChange = (e: any) => {
-    console.log(e.target.value);
-    setCounter({ ...counter, limit: e.target.value });
-  };
-
-  const handlePageChange = (pageNumber: number) => {
-    console.log(pageNumber);
-    setCounter({ ...counter, page: pageNumber });
-  };
+    dispatch(
+      fetchUsersRequested({
+        page: pageCount,
+        limit: pageLimit,
+        query: searchQuery,
+      })
+    );
+  }, [dispatch, pageLimit, pageCount, searchQuery]);
 
   return (
     <div className='home'>
@@ -40,6 +34,8 @@ const Home = () => {
           <CustomButton disabled={error || isLoading}>Add User</CustomButton>
         </Link>
       </div>
+      <SearchBarContainer />
+      {searchQuery && !users.length && 'No Record Found!'}
 
       {isLoading && <Loader />}
 
@@ -49,13 +45,10 @@ const Home = () => {
         <div className='error'>{error}</div>
       )}
 
-      {!users.length && !isLoading && !error && (
+      {!users.length && !isLoading && !error && !searchQuery && (
         <div className='heading'>Start adding users!</div>
       )}
-      <Pagination
-        handleLimitChange={handlePageLimitChange}
-        handlePageChange={handlePageChange}
-      />
+      {users.length ? <PaginationContainer /> : null}
     </div>
   );
 };
