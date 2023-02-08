@@ -20,9 +20,9 @@ const Home = () => {
   useEffect(() => {
     dispatch(
       fetchUsersRequested({
-        page: pageCount,
-        limit: pageLimit,
-        query: searchQuery,
+        pageCount,
+        pageLimit,
+        searchQuery,
       })
     );
   }, [dispatch, pageLimit, pageCount, searchQuery]);

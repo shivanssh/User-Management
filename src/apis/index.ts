@@ -9,7 +9,7 @@ export const fetchUsersApi = async ({
   searchQuery,
 }: PageInfo) =>
   await axios.get(
-    `users?q=${pageCount}&_page=${pageLimit}&_limit=${searchQuery}`
+    `users?q=${searchQuery}&_page=${pageCount}&_limit=${pageLimit}`
   );
 
 export const addUserApi = async (user: User) =>
