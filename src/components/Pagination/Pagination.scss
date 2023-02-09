@@ -1,8 +1,9 @@
 @mixin removeButtonDecoration {
   border: none;
-  font-size: 16px;
+  font-size: 20px;
   background: none;
   cursor: pointer;
+  padding: 5px 10px;
 }
 
 .pagination {
@@ -13,12 +14,16 @@
   .next-previous-button {
     display: flex;
     justify-content: flex-end;
-    .next-button {
+
+    button {
       @include removeButtonDecoration();
-    }
-    .previous-button {
-      margin-right: 10px;
-      @include removeButtonDecoration();
+
+      &:hover {
+        background: #ddd;
+      }
+      &.active {
+        background: #b8c6db;
+      }
     }
   }
 
@@ -31,6 +36,25 @@
     .page-limit-selection {
       padding: 5px;
       font-size: 16px;
+      background: none;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .pagination {
+    .page-limit {
+      .limit-title {
+        display: none;
+      }
+      .page-limit-selection {
+        margin: 10px;
+      }
+    }
+    .next-previous-button {
+      .page-numbers {
+        display: none;
+      }
     }
   }
 }

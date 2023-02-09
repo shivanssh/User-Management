@@ -2,16 +2,21 @@ import React from 'react';
 import './Pagination.scss';
 
 interface IProps {
-  disabled: boolean;
+  currentPage: number;
+  totalPageCount: number;
   handleLimitChange: (e: any) => void;
-  nextButtonClicked: () => void;
-  previousButtonClicked: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
+  pageClick: (idx: number) => void;
 }
+
 const Pagination = ({
-  disabled,
+  currentPage,
+  totalPageCount,
   handleLimitChange,
-  nextButtonClicked,
-  previousButtonClicked,
+  onNext,
+  onPrevious,
+  pageClick,
 }: IProps) => {
   return (
     <div className='pagination'>
@@ -32,13 +37,28 @@ const Pagination = ({
       <div className='next-previous-button'>
         <button
           className='previous-button'
-          onClick={() => previousButtonClicked()}
-          disabled={disabled}
+          onClick={() => onPrevious()}
+          disabled={currentPage === 1}
         >
-          Previous
+          &laquo;
         </button>
-        <button className='next-button' onClick={() => nextButtonClicked()}>
-          Next
+        <div className='page-numbers'>
+          {[...new Array(totalPageCount)].map((_, idx) => (
+            <button
+              key={idx}
+              className={++idx === currentPage ? 'active' : ''}
+              onClick={() => pageClick(idx)}
+            >
+              {idx}
+            </button>
+          ))}
+        </div>
+        <button
+          className='next-button'
+          onClick={() => onNext()}
+          disabled={currentPage === totalPageCount || !totalPageCount}
+        >
+          &raquo;
         </button>
       </div>
     </div>

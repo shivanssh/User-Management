@@ -10,8 +10,8 @@ import { User } from '../../types';
 import { deleteUserToast, errorToast } from './../../utils/helper';
 import { useAppSelector, useAppDispatch } from '../../hooks/dispatchSelection';
 import Popup from '../Popup/Popup';
-
-const DATA_LABELS = ['Sr No.', 'Name', 'Email', 'Age', 'Address', 'Actions'];
+import { setSortConfig } from '../../redux/features/paginationSlice';
+import { DATA_LABELS } from './../../utils/constDatas';
 
 interface IProps {
   users: User[];
@@ -23,8 +23,9 @@ const TableView = ({ users }: IProps) => {
   const [deleteId, setDeleteId] = useState<string>('');
   const [userEmail, setUserEmail] = useState('');
   const { error, isUserDeleted } = useAppSelector((state) => state.users);
+  const { sortConfig } = useAppSelector((state) => state.pagination);
 
-  useEffect(() => {}, [deleteId, showPopup]);
+  useEffect(() => {}, [deleteId, showPopup, sortConfig]);
 
   const deleteConfirmation = (isConfirmed: boolean) => {
     if (isConfirmed) {
@@ -33,10 +34,10 @@ const TableView = ({ users }: IProps) => {
     setShowPopup(false);
   };
 
-  const handleDelete = (id: any) => {
+  const handleDelete = (id: number) => {
     setShowPopup(true);
-    setDeleteId(id);
-    const user = users.find((user) => user.id === Number(id));
+    setDeleteId(String(id));
+    const user = users.find((user) => user.id === id);
     user && setUserEmail(user?.email);
   };
 
@@ -48,6 +49,13 @@ const TableView = ({ users }: IProps) => {
       <CustomButton onClick={() => handleDelete(id)}>Delete</CustomButton>
     </div>
   );
+  const handleSort = (key: string) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    dispatch(setSortConfig({ key, direction }));
+  };
 
   useEffect(() => {
     error && (errorToast(), dispatch(clearError()));
@@ -65,21 +73,34 @@ const TableView = ({ users }: IProps) => {
       <table className='table'>
         <thead>
           <tr>
-            {DATA_LABELS.map((label, idx) => (
-              <th key={idx}>{label}</th>
+            {DATA_LABELS.map(({ id, title }) => (
+              <th
+                key={id}
+                onClick={() => handleSort(id)}
+                className='table-header'
+              >
+                <span className='title'>{title}</span>
+                {sortConfig?.key === id && sortConfig?.direction === 'asc' && (
+                  <span className='sort-order'>&or;</span>
+                )}
+                {sortConfig?.key === id && sortConfig?.direction === 'desc' && (
+                  <span className='sort-order'>&and;</span>
+                )}
+              </th>
             ))}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user: User, idx: number) => {
-            const { id, name, age, address, email } = user;
+          {users.map((user: any) => {
+            const { id } = user;
             return (
               <tr key={id}>
-                <td data-label='Sr No.'>{idx + 1}</td>
-                <td data-label='Name'>{name}</td>
-                <td data-label='Email'>{email}</td>
-                <td data-label='Age'>{age}</td>
-                <td data-label='Address'>{address}</td>
+                {DATA_LABELS.map(({ id }) => (
+                  <td key={id} data-label={id}>
+                    {user[id]}
+                  </td>
+                ))}
                 <td data-label='Actions'>{actionsButtons(id)}</td>
               </tr>
             );

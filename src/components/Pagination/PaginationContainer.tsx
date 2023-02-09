@@ -7,21 +7,28 @@ import {
 import {
   decrementPageCount,
   incrementPageCount,
+  setCurrentPage,
   updatePageLimit,
 } from '../../redux/features/paginationSlice';
 
 const PaginationContainer = () => {
-  const { pageCount, pageLimit } = useAppSelector((state) => state.pagination);
-
-  useEffect(() => {}, [pageCount, pageLimit]);
   const dispatch = useAppDispatch();
+  const { currentPage, pageLimit, totalPageCount } = useAppSelector(
+    (state) => state.pagination
+  );
+
+  useEffect(() => {}, [currentPage, pageLimit, totalPageCount]);
+
+  const totalPage = Math.ceil(totalPageCount / +pageLimit);
 
   return (
     <Pagination
-      disabled={pageCount === 1}
+      currentPage={currentPage}
+      totalPageCount={totalPage}
       handleLimitChange={(e) => dispatch(updatePageLimit(e.target.value))}
-      nextButtonClicked={() => dispatch(incrementPageCount())}
-      previousButtonClicked={() => dispatch(decrementPageCount())}
+      onNext={() => dispatch(incrementPageCount())}
+      onPrevious={() => dispatch(decrementPageCount())}
+      pageClick={(idx) => dispatch(setCurrentPage(idx))}
     />
   );
 };

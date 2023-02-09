@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './Home.scss';
 import { Link } from 'react-router-dom';
 import TableView from '../../components/TableView/TableView';
@@ -12,20 +12,30 @@ import PaginationContainer from '../../components/Pagination/PaginationContainer
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const { users, isLoading, error } = useAppSelector((state) => state.users);
-  const { pageCount, pageLimit, searchQuery } = useAppSelector(
+  const { users, isLoading, error, isUserDeleted } = useAppSelector(
+    (state) => state.users
+  );
+  const { currentPage, pageLimit, searchQuery, sortConfig } = useAppSelector(
     (state) => state.pagination
   );
 
   useEffect(() => {
     dispatch(
       fetchUsersRequested({
-        pageCount,
+        currentPage,
         pageLimit,
         searchQuery,
+        sortConfig,
       })
     );
-  }, [dispatch, pageLimit, pageCount, searchQuery]);
+  }, [
+    dispatch,
+    pageLimit,
+    currentPage,
+    searchQuery,
+    sortConfig,
+    isUserDeleted,
+  ]);
 
   return (
     <div className='home'>
@@ -34,7 +44,7 @@ const Home = () => {
           <CustomButton disabled={error || isLoading}>Add User</CustomButton>
         </Link>
       </div>
-      <SearchBarContainer />
+      {<SearchBarContainer />}
       {searchQuery && !users.length && 'No Record Found!'}
 
       {isLoading && <Loader />}

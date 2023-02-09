@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { put, takeEvery } from 'redux-saga/effects';
 import { PageInfo, User } from '../../types';
+import { setTotalCount } from '../features/paginationSlice';
 import {
   setError,
   fetchUsersSucceeded,
@@ -19,7 +20,10 @@ function* fetchUsers(action: PayloadAction<PageInfo>): any {
 
   try {
     const response = yield userServices.fetchUsers(payload);
-    yield put(fetchUsersSucceeded(response.data));
+    if (response.status === 200) {
+      yield put(fetchUsersSucceeded(response.data));
+      yield put(setTotalCount(+response.headers['x-total-count']));
+    }
   } catch (error: any) {
     yield put(setError(error.message));
   }

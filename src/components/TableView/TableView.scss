@@ -4,6 +4,19 @@
     border-collapse: collapse;
     margin: 10px;
 
+    .table-header {
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .title {
+      margin-right: 5px;
+    }
+    .sort-order {
+      color: #9e8484;
+    }
+
     th,
     td {
       padding: 10px 15px;

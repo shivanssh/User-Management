@@ -4,12 +4,13 @@ import { PageInfo, User } from '../types';
 axios.defaults.baseURL = 'http://localhost:8080';
 
 export const fetchUsersApi = async ({
-  pageCount,
+  currentPage,
   pageLimit,
   searchQuery,
+  sortConfig,
 }: PageInfo) =>
   await axios.get(
-    `users?q=${searchQuery}&_page=${pageCount}&_limit=${pageLimit}`
+    `users?q=${searchQuery}&_page=${currentPage}&_limit=${pageLimit}&_sort=${sortConfig.key}&_order=${sortConfig.direction}`
   );
 
 export const addUserApi = async (user: User) =>

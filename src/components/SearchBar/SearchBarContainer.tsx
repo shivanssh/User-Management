@@ -7,7 +7,7 @@ import { updateSearchquery } from '../../redux/features/paginationSlice';
 const SearchBarContainer = () => {
   const dispatch = useAppDispatch();
   const [searchQuery, setSearchQuery] = useState('');
-  const debouncedQuery = useDebounce(searchQuery, 1000);
+  const debouncedQuery = useDebounce(searchQuery);
 
   useEffect(() => {
     dispatch(updateSearchquery(debouncedQuery));

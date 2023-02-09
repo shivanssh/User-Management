@@ -7,9 +7,14 @@ export interface User {
 }
 
 interface PageInfo {
-  pageCount: number;
+  currentPage: number;
   pageLimit: string;
   searchQuery: string;
+  totalPageCount: number;
+  sortConfig: {
+    key: string;
+    direction: string;
+  };
 }
 
 export interface State {
