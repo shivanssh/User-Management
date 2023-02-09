@@ -21,8 +21,8 @@ const createDummyData = (count: number): User[] => {
     users.push(userObj);
   }
 
-  return users;
+  return Object.assign({ users: users });
 };
 
 const dummyData = createDummyData(40);
-fs.writeFileSync('dummyData.json', JSON.stringify(dummyData));
+fs.writeFileSync('db.json', JSON.stringify(dummyData));
