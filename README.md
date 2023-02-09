@@ -10,6 +10,8 @@ npm start - to start the application.
 
 npm run server - to start internal JSON-Serve which is acting like a db.
 
+npm run data - to create dummy data that will update db.json.
+
 # Info
 
 ## Functionality
@@ -20,6 +22,8 @@ npm run server - to start internal JSON-Serve which is acting like a db.
 - Error is handled in Fetch, Add, Update & delete functionality, it will appear in toast.
 - Loader is there for better UI experience.
 - react-toastify is used to show success and error messages.
+- search functionality is also there with debounce feature.
+- pagination and sort functionality is now there.
 
 ## Libraries
 
