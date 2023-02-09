@@ -44,7 +44,7 @@ const Home = () => {
           <CustomButton disabled={error || isLoading}>Add User</CustomButton>
         </Link>
       </div>
-      {<SearchBarContainer />}
+      {!error && <SearchBarContainer />}
       {searchQuery && !users.length && 'No Record Found!'}
 
       {isLoading && <Loader />}

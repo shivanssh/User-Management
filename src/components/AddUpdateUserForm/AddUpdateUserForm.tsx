@@ -16,6 +16,7 @@ const AddUpdateUserForm = ({ formik, isEdit }: IProps) => {
       <div className='form-container'>
         <Input label='name' name='name' type='text' />
         <Input label='email' name='email' type='email' />
+        <Input label='age' name='age' type='text' />
         <Input label='address' name='address' type='text' />
         <div className='button-options'>
           <CustomButton type='submit' disabled={!formik.isValid}>
