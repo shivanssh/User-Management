@@ -33,6 +33,7 @@ const FormikContainer = () => {
   const initialValues: Partial<User> = {
     name: '',
     email: '',
+    age: '',
     address: '',
   };
   const [currentUser, setCurrentUser] = useState(initialValues);

@@ -19,15 +19,10 @@ const Home = () => {
     (state) => state.pagination
   );
 
+  const fetchUsersPayload = { currentPage, pageLimit, searchQuery, sortConfig };
+
   useEffect(() => {
-    dispatch(
-      fetchUsersRequested({
-        currentPage,
-        pageLimit,
-        searchQuery,
-        sortConfig,
-      })
-    );
+    dispatch(fetchUsersRequested(fetchUsersPayload));
   }, [
     dispatch,
     pageLimit,
@@ -44,21 +39,24 @@ const Home = () => {
           <CustomButton disabled={error || isLoading}>Add User</CustomButton>
         </Link>
       </div>
+
       {!error && <SearchBarContainer />}
-      {searchQuery && !users.length && 'No Record Found!'}
 
       {isLoading && <Loader />}
 
       {!isLoading && users.length ? <TableView users={users} /> : null}
 
+      {users.length ? <PaginationContainer /> : null}
+
       {!users.length && !isLoading && error && (
         <div className='error'>{error}</div>
       )}
 
+      {searchQuery && !users.length && 'No Record Found!'}
+
       {!users.length && !isLoading && !error && !searchQuery && (
         <div className='heading'>Start adding users!</div>
       )}
-      {users.length ? <PaginationContainer /> : null}
     </div>
   );
 };

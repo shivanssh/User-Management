@@ -11,7 +11,7 @@ import { deleteUserToast, errorToast } from './../../utils/helper';
 import { useAppSelector, useAppDispatch } from '../../hooks/dispatchSelection';
 import Popup from '../Popup/Popup';
 import { setSortConfig } from '../../redux/features/paginationSlice';
-import { DATA_LABELS } from './../../utils/constDatas';
+import { DATA_LABELS } from '../../utils/constants';
 
 interface IProps {
   users: User[];
@@ -49,6 +49,7 @@ const TableView = ({ users }: IProps) => {
       <CustomButton onClick={() => handleDelete(id)}>Delete</CustomButton>
     </div>
   );
+
   const handleSort = (key: string) => {
     let direction = 'asc';
     if (sortConfig.key === key && sortConfig.direction === 'asc') {

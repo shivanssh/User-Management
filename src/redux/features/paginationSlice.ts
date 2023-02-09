@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PageInfo } from '../../types';
+import { sortConfig, PageInfo } from './../../types.d';
 
 const initialState: PageInfo = {
   currentPage: 0,
@@ -22,7 +22,7 @@ const paginationSlice = createSlice({
     decrementPageCount: (state) => {
       --state.currentPage;
     },
-    setCurrentPage: (state, action) => {
+    setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
     updatePageLimit: (state, action: PayloadAction<string>) => {
@@ -33,10 +33,10 @@ const paginationSlice = createSlice({
       state.searchQuery = action.payload;
       state.currentPage = 1;
     },
-    setTotalCount: (state, action) => {
+    setTotalCount: (state, action: PayloadAction<number>) => {
       state.totalPageCount = action.payload;
     },
-    setSortConfig: (state, action) => {
+    setSortConfig: (state, action: PayloadAction<sortConfig>) => {
       state.sortConfig.direction = action.payload.direction;
       state.sortConfig.key = action.payload.key;
       state.currentPage = 1;

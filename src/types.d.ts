@@ -1,20 +1,22 @@
 export interface User {
   id: number;
   name: string;
-  age: number;
+  age: string;
   email: string;
   address: string;
 }
 
-interface PageInfo {
+export interface PageInfo {
   currentPage: number;
   pageLimit: string;
   searchQuery: string;
   totalPageCount: number;
-  sortConfig: {
-    key: string;
-    direction: string;
-  };
+  sortConfig: sortConfig;
+}
+
+export interface sortConfig {
+  key: string;
+  direction: string;
 }
 
 export interface State {
