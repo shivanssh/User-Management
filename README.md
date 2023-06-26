@@ -1,6 +1,6 @@
 # CRUD-RTK-SAGA
 
-A simple CRUD application, implemented using React + Redux Toolkit + Redux Saga(Middleware) + JSON-Server.
+A simple user(employee) management application, implemented using React + Redux Toolkit + Redux Saga(Middleware) + JSON-Server.
 
 # Initial Step
 
